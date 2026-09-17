@@ -1,19 +1,54 @@
-# React + Vite
+## Enunciado
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Crea una aplicación para buscar películas
 
-Currently, two official plugins are available:
+API a usar: - https://www.omdbapi.com/
+API-KEY: 2fa0b8e7
+http://www.omdbapi.com/?apikey=2fa0b8e7&
+Consigue la API Key en la propia página web registrando tu email.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Requerimientos:
 
-## React Compiler
+✅ Necesita mostrar un input para buscar la película y un botón para buscar.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+✅ Lista las películas y muestra el título, año y poster.
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+✅ Que el formulario funcione
 
-## Expanding the ESLint configuration
+✅ Haz que las películas se muestren en un grid responsive.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+✅ Hacer el fetching de datos a la API
+
+Primera iteración:
+
+✅ Evitar que se haga la misma búsqueda dos veces seguidas.
+
+✅ Haz que la búsqueda se haga automáticamente al escribir.
+
+✅ Evita que se haga la búsqueda continuamente al escribir (debounce)
+
+## Estado actual
+
+### Lo implementado hasta ahora
+
+- **Estructura del proyecto** montada con Vite + React:
+  - `src/components/Movies.jsx`: renderiza el grid de películas (título, año y poster) y maneja el caso de "No movies found".
+  - `src/hooks/useMovies.jsx`: hook que lee las películas del mock `mocks/with-results.json`, las mapea a la forma `{ title, year, id, poster }` y las devuelve.
+  - `src/mocks/`: mocks locales (`with-results.json` y `no-results.json`) para trabajar sin depender de la API todavía.
+- **Formulario de búsqueda** (`App.jsx`): input controlado + botón "Search". El `handleSubmit` aún solo loguea la búsqueda, no conecta con la API.
+- **Grid responsive** de películas funcional con los datos del mock.
+
+### Pendiente / siguiente paso
+
+- Hacer el fetch real contra la OMDB API (`https://www.omdbapi.com/?apikey=2fa0b8e7&s=<query>`).
+- Conectar `handleSubmit` a la búsqueda y manejar errores / sin resultados.
+- Implementar la primera iteración: evitar búsquedas duplicadas, búsqueda automática al escribir y debounce.
+
+## Scripts
+
+```bash
+npm run dev      # entorno de desarrollo
+npm run build    # build de producción
+npm run lint     # eslint
+npm run preview  # sirve el build localmente
+```
