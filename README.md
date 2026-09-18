@@ -23,9 +23,9 @@ Primera iteración:
 
 ✅ Evitar que se haga la misma búsqueda dos veces seguidas.
 
-✅ Haz que la búsqueda se haga automáticamente al escribir.
+⏳ Haz que la búsqueda se haga automáticamente al escribir.
 
-✅ Evita que se haga la búsqueda continuamente al escribir (debounce)
+⏳ Evita que se haga la búsqueda continuamente al escribir (debounce)
 
 ## Estado actual
 
@@ -33,16 +33,17 @@ Primera iteración:
 
 - **Estructura del proyecto** montada con Vite + React:
   - `src/components/Movies.jsx`: renderiza el grid de películas (título, año y poster) y maneja el caso de "No movies found".
-  - `src/hooks/useMovies.jsx`: hook que lee las películas del mock `mocks/with-results.json`, las mapea a la forma `{ title, year, id, poster }` y las devuelve.
-  - `src/mocks/`: mocks locales (`with-results.json` y `no-results.json`) para trabajar sin depender de la API todavía.
-- **Formulario de búsqueda** (`App.jsx`): input controlado + botón "Search". El `handleSubmit` aún solo loguea la búsqueda, no conecta con la API.
-- **Grid responsive** de películas funcional con los datos del mock.
+  - `src/hooks/useMovies.jsx`: hook que hace el fetch contra la OMDB API (`https://www.omdbapi.com/?apikey=2fa0b8e7&s=<query>`), mapea los resultados a la forma `{ title, year, id, poster }` y evita repetir la misma búsqueda dos veces seguidas (usa un `useRef` con la búsqueda anterior).
+  - `src/hooks/useSearch.jsx`: hook que mantiene el valor del input y valida la búsqueda (no vacía, que no sea un número, mínimo 3 caracteres), mostrando el error correspondiente.
+  - `src/mocks/`: mocks locales (`with-results.json` y `no-results.json`) que ya no se usan para el fetch.
+- **Formulario de búsqueda** (`App.jsx`): input controlado + botón "Search". El `handleSubmit` dispara `getMovies()` y muestra los errores de validación en pantalla.
+- **Fetch a la API** conectado y funcional, con estilos CSS aplicados al grid de resultados.
 
 ### Pendiente / siguiente paso
 
-- Hacer el fetch real contra la OMDB API (`https://www.omdbapi.com/?apikey=2fa0b8e7&s=<query>`).
-- Conectar `handleSubmit` a la búsqueda y manejar errores / sin resultados.
-- Implementar la primera iteración: evitar búsquedas duplicadas, búsqueda automática al escribir y debounce.
+- Implementar la búsqueda automática al escribir.
+- Implementar el debounce para evitar búsquedas continuas mientras se escribe.
+- Manejar el caso de `Response: false` devuelto por la API (cuando no hay resultados, actualmente solo "No movies found" con el mock o el listado vacío).
 
 ## Scripts
 
